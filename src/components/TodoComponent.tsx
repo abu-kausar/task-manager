@@ -84,7 +84,7 @@ export default function TodoColumn({ status, todos, setTodos }: Props) {
         <>
           <button
             onClick={() => setShowModal(true)}
-            className="mb-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+            className="mb-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition cursor-pointer"
           >
             + Add Task
           </button>
