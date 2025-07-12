@@ -10,9 +10,10 @@ interface Props {
   status: "New" | "Ongoing" | "Done";
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  setShowLottie: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function TodoColumn({ status, todos, setTodos }: Props) {
+export default function TodoColumn({ status, todos, setTodos, setShowLottie }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [isOver, setIsOver] = useState(false);
 
@@ -55,6 +56,9 @@ export default function TodoColumn({ status, todos, setTodos }: Props) {
     setTodos((prev) =>
       prev.map((todo) => (todo.id === id ? { ...todo, status } : todo))
     );
+    if (status === "Done") {
+      setShowLottie(true);
+    }
     setIsOver(false);
   };
 
@@ -103,6 +107,7 @@ export default function TodoColumn({ status, todos, setTodos }: Props) {
             todo={todo}
             todos={todos}
             setTodos={setTodos}
+            setShowLottie={setShowLottie}
           />
         ))}
       </div>

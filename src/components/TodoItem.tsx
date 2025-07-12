@@ -7,18 +7,24 @@ interface Props {
   todo: Todo;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  setShowLottie: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function TodoItem({ todo, todos, setTodos }: Props) {
+export default function TodoItem({ todo, todos, setTodos, setShowLottie }: Props) {
   const [showMenu, setShowMenu] = useState(false);
 
-  const moveTo = (newStatus: Todo["status"]) => {
-    const updated = todos.map((t) =>
-      t.id === todo.id ? { ...t, status: newStatus } : t
-    );
-    setTodos(updated);
-    setShowMenu(false);
-  };
+  const moveTo = (newStatus: Todo['status']) => {
+  const updated = todos.map((t) =>
+    t.id === todo.id
+      ? { ...t, status: newStatus }
+      : t
+  );
+  setTodos(updated);
+  if (newStatus === 'Done') {
+    setShowLottie(true);
+  }
+  setShowMenu(false);
+};
 
   const otherStatuses = ["New", "Ongoing", "Done"].filter(
     (s) => s !== todo.status
