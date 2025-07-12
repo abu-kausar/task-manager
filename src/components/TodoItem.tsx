@@ -14,12 +14,7 @@ export default function TodoItem({ todo, todos, setTodos }: Props) {
 
   const moveTo = (newStatus: Todo["status"]) => {
     const updated = todos.map((t) =>
-      t.id === todo.id
-        ? {
-            ...t,
-            status: newStatus,
-          }
-        : t
+      t.id === todo.id ? { ...t, status: newStatus } : t
     );
     setTodos(updated);
     setShowMenu(false);
@@ -28,6 +23,12 @@ export default function TodoItem({ todo, todos, setTodos }: Props) {
   const otherStatuses = ["New", "Ongoing", "Done"].filter(
     (s) => s !== todo.status
   );
+
+  // Drag start
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData("text/plain", todo.id);
+    e.dataTransfer.effectAllowed = "move";
+  };
 
   const statusStyles = {
     New: {
@@ -51,11 +52,13 @@ export default function TodoItem({ todo, todos, setTodos }: Props) {
 
   return (
     <div
+      draggable
+      onDragStart={handleDragStart}
       onContextMenu={(e) => {
         e.preventDefault();
         setShowMenu(!showMenu);
       }}
-      className={`relative p-4 border-l-4 ${border} bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 cursor-pointer`}
+      className={`relative p-4 border-l-4 ${border} bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 cursor-grab`}
     >
       {/* Status Badge */}
       <span
