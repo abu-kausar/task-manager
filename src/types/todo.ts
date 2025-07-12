@@ -4,5 +4,5 @@ export interface Todo {
   description: string;
   status: 'New' | 'Ongoing' | 'Done';
   createdAt: Date;
-  dueDate?: Date;
+  dueDate: Date;
 }
